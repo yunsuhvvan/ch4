@@ -21,14 +21,15 @@ public class BoardController {
 
     // **수정하기;**
     @PostMapping("/modify")
-    public String modify(BoardDto boardDto, HttpSession session, Model m , RedirectAttributes rattr, Integer page , Integer pageSize) {
+    public String modify(BoardDto boardDto, HttpSession session, Model m , RedirectAttributes rattr, Integer page , Integer pageSize, SearchCondition sc) {
         String writer = (String) session.getAttribute("id");
         boardDto.setWriter(writer);
 
+        System.out.println("sc.getQueryString() = " + sc.getQueryString());
         try {
             // 흠 왜 이거 안되지
-            m.addAttribute("page", page);
-            m.addAttribute("pageSize", pageSize);
+            m.addAttribute("page", sc.getPage());
+            m.addAttribute("pageSize", sc.getPageSize());
 
             int rowCnt =  boardService.modify(boardDto); // insert
 
@@ -36,7 +37,7 @@ public class BoardController {
                 throw new  Exception("modify Failed");
             }
             rattr.addFlashAttribute("msg", "MOD_OK");
-            return "redirect:/board/list?page="+page+"&pageSize="+pageSize+"";
+            return "redirect:/board/list"+sc.getQueryString();
         } catch (Exception e) {
             e.printStackTrace();
             // 실패하면 사용자가 그전에 입력했던 내용을 보여주기 위해서 Model에 담기
@@ -146,7 +147,6 @@ public class BoardController {
             m.addAttribute("msg", "LIST_ERR");
             m.addAttribute("totalCnt", 0);
         }
-
         return "boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
     }
     private boolean loginCheck(HttpServletRequest request) {

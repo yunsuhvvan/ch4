@@ -6,7 +6,7 @@
 
 a { text-decoration: none;  }
 
-ul {
+.navMenu {
     list-style-type: none;
     height: 48px;
     width: 100%;
@@ -14,15 +14,15 @@ ul {
     display: flex;
 }
 
-ul > li {
+.navMenu > li {
     color: lightgray;
     height : 100%;
-    width:90px;
-    display:flex;
+    display: flex;
+    width: 90px;
     align-items: center;
 }
 
-ul > li > a {
+.navMenu > li > a {
     color: lightgray;
     margin:auto;
     padding: 10px;
@@ -30,7 +30,7 @@ ul > li > a {
     align-items: center;
 }
 
-ul > li > a:hover {
+.navMenu > li > a:hover {
     color :white;
     border-bottom: 3px solid rgb(209, 209, 209);
 }

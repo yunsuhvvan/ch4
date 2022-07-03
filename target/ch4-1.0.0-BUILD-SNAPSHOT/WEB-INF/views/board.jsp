@@ -3,7 +3,7 @@
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
+<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'Logout'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,12 +66,12 @@
 </head>
 <body>
 <div id="menu">
-    <ul>
+    <ul class="navMenu">
         <li id="logo">yunsuhwan</li>
         <li><a href="<c:url value='/'/>">Home</a></li>
         <li><a href="<c:url value='/board/list'/>">Board</a></li>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
-        <li><a href="<c:url value='/register/add'/>">Sign in</a></li>
+        <li><a href="<c:url value='/login/add'/>">Sign in</a></li>
         <li><a href=""><i class="fa fa-search"></i></a></li>
     </ul>
 </div>
@@ -101,6 +101,9 @@
         <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록</button>
     </form>
 </div>
+
+
+
 <script>
     $(document).ready(function(){
         let formCheck = function() {
@@ -120,6 +123,8 @@
         $("#writeNewBtn").on("click", function(){
             location.href="<c:url value='/board/write'/>";
         });
+
+        //글 작성하기
         $("#writeBtn").on("click", function(){
             let form = $("#form");
             form.attr("action", "<c:url value='/board/write'/>");
@@ -127,6 +132,8 @@
             if(formCheck())
                 form.submit();
         });
+
+        // 수정하기
         $("#modifyBtn").on("click", function(){
             let form = $("#form");
             let isReadonly = $("input[name=title]").attr('readonly');
@@ -144,6 +151,7 @@
             if(formCheck())
                 form.submit();
         });
+        //삭제하기
         $("#removeBtn").on("click", function(){
             if(!confirm("정말로 삭제하시겠습니까?")) return;
             let form = $("#form");
@@ -156,5 +164,9 @@
         });
     });
 </script>
+
+<%@ include file="/WEB-INF/views/test.jsp" %>
+
+
 </body>
 </html>

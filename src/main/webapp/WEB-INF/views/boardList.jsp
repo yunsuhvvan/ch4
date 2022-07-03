@@ -4,7 +4,7 @@
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
+<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'Logout'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,7 +152,7 @@
 </head>
 <body>
 <div id="menu">
-    <ul>
+    <ul class="navMenu">
         <li id="logo">yunsuhwan</li>
         <li><a href="<c:url value='/'/>">Home</a></li>
         <li><a href="<c:url value='/board/list'/>">Board</a></li>

@@ -38,7 +38,6 @@ public class LoginController {
     @PostMapping("/login")
     public String login(String id, String pwd, String toURL, boolean rememberId,
                         HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         // 1. id와 pwd를 확인
         if(!loginCheck(id, pwd)) {
             // 2-1   일치하지 않으면, loginForm으로 이동
@@ -82,5 +81,10 @@ public class LoginController {
 
         return user!=null && user.getPwd().equals(pwd);
 //        return "asdf".equals(id) && "1234".equals(pwd);
+    }
+
+    @GetMapping("/add")
+    public String addForm() {
+        return "addForm";
     }
 }

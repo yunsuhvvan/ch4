@@ -20,8 +20,9 @@ public class CommentController {
     // 지정된 댓글을 수정하는 메서드
     @PatchMapping("/comments/{cno}")  // /comments/1?bno=231    <-- 수정할 댓글 번호
     public ResponseEntity<String> modify(@PathVariable Integer cno, @RequestBody CommentDto dto, HttpSession session) {
-//        String commenter = (String) session.getAttribute("id");
-        String commenter = "asdf1";
+        String commenter = (String) session.getAttribute("id");
+
+        //String commenter = session.getId();
 
         dto.setCommenter(commenter);
        dto.setCno(cno);
@@ -43,11 +44,11 @@ public class CommentController {
     // 댓글을 등록하는 메서드
     @PostMapping("/comments") //  /ch4/comments?bno=1085 POST
     public ResponseEntity<String> write(@RequestBody CommentDto dto ,  Integer bno , HttpSession session) {
-        String commenter = "asdf1";
+        String commenter = (String) session.getAttribute("id");
 
         dto.setCommenter(commenter);
         dto.setBno(bno);
-        System.out.println("dto = " + dto);
+
         try {
             if (service.write(dto) != 1) {
                 throw new Exception("Write failed");
@@ -64,7 +65,7 @@ public class CommentController {
     @DeleteMapping("/comments/{cno}")  // /comments/1?bno=231    <-- 삭제할 댓글 번호
     public ResponseEntity<String> remove(@PathVariable Integer cno, Integer bno , HttpSession session) {
 //        String commenter = (String) session.getAttribute("id");
-        String commenter = "asdf1";
+        String commenter = (String) session.getAttribute("id");
         try {
             int rowCnt = service.remove(cno, bno, commenter);
             if (rowCnt != 1) {
@@ -85,7 +86,6 @@ public class CommentController {
         List<CommentDto> list = null;
         try {
             list = service.getList(bno);
-            System.out.println("list = " + list);
             // 에러가 나든 성공하든 항상 200번 이기때문에 성공했을떄와 실패했을때 다른 상태코드를 줄 수 있어야한다.
             return new ResponseEntity<List<CommentDto>>(list , HttpStatus.OK); // 200
         } catch (Exception e) {
